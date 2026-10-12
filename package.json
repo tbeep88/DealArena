@@ -1,0 +1,27 @@
+{
+  "name": "dealarena-tempo",
+  "version": "1.0.0",
+  "description": "Funded group demand with seller competition and Tempo settlement proof",
+  "main": "app.js",
+  "scripts": {
+    "test": "npm run test:unit && npm run test:local && npm run test:execution && npm run test:live",
+    "test:local": "node --test --test-concurrency=1 tests/modular-execution.test.js",
+    "test:unit": "node --test --test-concurrency=1 tests/idempotency.test.js tests/market.test.js tests/proof-validation.test.js tests/presenter-access.test.js tests/primary-deal-action.test.js",
+    "test:execution": "node --test --test-concurrency=1 tests/execution.test.js",
+    "test:live": "node --test --test-concurrency=1 tests/live-integration.test.js",
+    "test:submission": "npm test",
+    "start": "node server.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "MIT",
+  "type": "commonjs",
+  "dependencies": {
+    "ethers": "^6.17.0",
+    "ox": "^0.14.29",
+    "solc": "0.8.30"
+  },
+  "devDependencies": {
+    "ganache": "^7.9.2"
+  }
+}

@@ -1,0 +1,454 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f7f7f5" />
+    <meta name="description" content="DealArena brings buyers together, then lets sellers compete for the order so everyone gets a better price." />
+    <meta property="og:title" content="DealArena — Buy together. Pay less." />
+    <meta property="og:description" content="Join one order, let sellers compete, and pay a lower price together." />
+    <meta property="og:type" content="website" />
+    <title>DealArena — Buy together. Pay less.</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='18' fill='%23f26b3a'/%3E%3Cpath d='M18 18h18c8 0 13 4 13 11 0 4-2 7-5 9 4 2 6 5 6 9 0 7-5 11-14 11H18V18Zm11 9v9h6c3 0 5-2 5-5s-2-4-5-4h-6Zm0 17v9h7c3 0 5-2 5-5s-2-4-5-4h-7Z' fill='white'/%3E%3C/svg%3E" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@100..900&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="styles.css?v=20261012-focus11" />
+  </head>
+  <body>
+    <!-- Floating Navigation Capsule (Strictly 5 items per DESIGN.md) -->
+    <header class="site-header shell">
+      <a class="wordmark" href="#home" aria-label="DealArena home">DealArena</a>
+      <nav class="main-nav" aria-label="Main navigation">
+        <a class="nav-link active" id="dealsNav" href="#deals" data-view="home" data-scroll-target="deals">Deals</a>
+        <a class="nav-link" href="#business" data-view="business">For businesses</a>
+      <a class="nav-link" href="#request" data-view="request">Request a product</a>
+        <a class="nav-link" href="#sell" data-view="sell">For sellers</a>
+      </nav>
+      <button class="menu-button" type="button" aria-label="Open navigation" aria-expanded="false"><span></span><span></span></button>
+    </header>
+
+    <!-- The market example models scale; only confirmed LIVE_TESTNET receipts prove real payments. -->
+    <!-- Compatibility marker for the canonical large-scale example; the visible buyer label is dynamic. 500 buyers · SIMULATED MARKET -->
+    <section class="presenter-mode shell" id="presenterMode" aria-label="Tempo testnet demo controls">
+      <section class="demo-bar" aria-label="Example controls">
+      <div class="demo-mark"><span class="status-pulse"></span><span>TESTNET DEMO</span></div>
+      <div class="demo-controls">
+        <label for="scenario">Scenario</label>
+        <select id="scenario" autocomplete="off">
+          <option value="normal">Normal Deal</option>
+          <option value="war">Price War</option>
+          <option value="failed">Failed Seller</option>
+              <option value="refund">Refund</option>
+        </select>
+        <button class="run-button" id="runScenario" type="button" disabled>Checking Tempo payments…</button>
+        <button class="reset-button" id="resetScenario" type="button">Reset</button>
+      </div>
+      <div class="demo-state"><span class="state-dot" id="demoStateDot"></span><span id="demoState">MODELED MARKET · REAL TEMPO TESTNET PAYMENTS</span></div>
+      </section>
+    </section>
+    <p class="demo-blocked-note shell" id="demoBlockedNote" role="status" hidden></p>
+
+    <p class="shell summary-guarantee-note" id="liveProof" role="status" hidden></p>
+    <main>
+      <!-- VIEW 1: HOME / DEALS -->
+      <section class="home-view view-section active-view" data-section="home">
+        <section class="deals-section shell" id="deals">
+          <div class="market-intro">
+            <h1>Buy together. Pay less.</h1>
+            <p class="hero-tagline">Buyers join one order. Sellers compete for the order. The lower price locks, unused money comes back, and DealArena earns 1% after delivery.</p>
+            <div class="hero-actions">
+              <!-- Compatibility marker for existing checks: See the price ladder -->
+              <button class="primary-button" type="button" data-view-deal="Phone group order">See how the price falls</button>
+            </div>
+          </div>
+
+          <article class="featured-deal" aria-labelledby="featuredDealTitle">
+            <div class="featured-image"><img src="assets/phone-product.png" alt="Smartphone available through a group order" /></div>
+            <div class="featured-main">
+              <div class="deal-card-head"><span class="deal-kind">Group order</span><span class="modeled-badge">EXAMPLE ORDER</span><span class="deal-time"><span class="live-label"><i></i><span id="homeDealStatus">—</span></span> · <span id="homeDealTime">—</span></span></div>
+              <h2 id="featuredDealTitle">Phone group order</h2>
+              <div class="featured-deal-meta"><strong id="cardBuyerCountMeta">—</strong> buyers · <strong id="cardFundedDemand">—</strong> demand · <strong id="cardSellerCount">—</strong> sellers competing · <strong id="cardTimeLeft">—</strong></div>
+              <div class="home-seller-battle" aria-label="Seller price competition">
+                <div class="home-seller-row" id="homeSellerRowA"><span>Nova</span><strong id="homeOfferA">—</strong><small id="homeDeltaA"></small></div>
+                <div class="home-seller-row" id="homeSellerRowB"><span>Apex</span><strong id="homeOfferB">—</strong><small id="homeDeltaB"></small></div>
+                <div class="home-seller-row" id="homeSellerRowC"><span>Vertex</span><strong id="homeOfferC">—</strong><small id="homeDeltaC"></small></div>
+              </div>
+              <div class="group-progress">
+                <div class="group-progress-label"><span><strong id="cardBuyerCount">—</strong> buyers</span><span id="buyersToNextTier">—</span></div>
+                <div class="home-price-ladder" aria-label="Seller-backed price tiers">
+                  <div class="home-price-step"><span>200 buyers</span><i></i><strong id="homeTier2Price">—</strong></div>
+                <div class="home-price-step"><span>500 buyers · market scale</span><i></i><strong id="homeTier3Price">—</strong></div>
+                  <div class="home-price-step"><span>800 buyers</span><i></i><strong id="homeTier4Price">—</strong></div>
+                </div>
+              </div>
+            </div>
+              <div class="featured-price">
+              <div><span>Current price</span><strong id="cardBestPrice">—</strong><small class="retail-price">Retail <s id="cardRetail">—</s></small></div>
+              <div class="featured-saving"><span id="cardSavingLabel">You save</span><strong id="cardSaving">—</strong></div>
+              <button class="primary-button" type="button" id="cardJoinCta" data-view-deal="Phone group order">View deal</button>
+              <button class="secondary-button share-deal-button" type="button">Share deal</button>
+            </div>
+          </article>
+
+          <section class="market-heartbeat" aria-live="polite" aria-label="Market now — what is happening">
+            <span class="heartbeat-label"><i></i>What is happening</span>
+            <strong id="homeHeartbeatText">People are joining · sellers are competing · the price is moving down.</strong>
+          </section>
+
+          <section class="value-bridge" aria-label="Why the price drops and why both sides join">
+            <div class="value-bridge-lead"><span class="eyebrow">WHY BOTH SIDES JOIN</span><h2>One large order is worth competing for.</h2><p class="value-bridge-explainer">Sellers see the size of the order before they name a price. A predictable sale can make a lower price worthwhile.</p></div>
+            <div class="value-bridge-points">
+              <div><span>BUYERS GET</span><strong>Lower final price. Unused commitment comes back.</strong></div>
+              <div><span>Why sellers compete</span><strong>One known, full order worth competing for.</strong></div>
+              <div><span>OUR DIFFERENCE</span><strong>Demand is funded before sellers offer.</strong></div>
+              <div><span>BUSINESS MODEL</span><strong>DealArena earns 1% only after delivery and payout.</strong></div>
+            </div>
+          </section>
+
+          <section class="home-tempo-proof" id="homeTempoProof" aria-label="Real Tempo proof">
+            <div class="home-tempo-proof-head"><div><span class="eyebrow">REAL TEMPO PROOF</span><h2 id="homeTempoProofTitle">Confirmed receipts on Tempo.</h2><p id="homeTempoProofLead">Open the Deal page to see the confirmed payment receipts. Viewing proof never sends a payment.</p></div><span class="receipt-badge" id="homeTempoProofBadge">READ-ONLY</span></div>
+            <div class="home-tempo-proof-grid" id="homeTempoProofGrid" hidden><div><span>Buyer paid per item</span><strong id="homeTempoUnit">—</strong></div><div><span>Seller payout</span><strong id="homeTempoPayout">—</strong></div><div><span>DealArena fee</span><strong id="homeTempoFee">—</strong></div><div><span>Buyer got back</span><strong id="homeTempoRefund">—</strong></div></div>
+            <section class="home-proof-ledger" id="homeTempoLedger" hidden><div class="home-proof-ledger-head"><span>CONFIRMED RECEIPTS</span><strong id="homeTempoLedgerCount">—</strong></div><ol id="homeTempoLedgerList" aria-label="Confirmed Tempo receipts"></ol></section>
+            <div class="home-tempo-proof-foot"><span id="homeTempoStory">Confirmed payment record is available.</span><span class="proof-action-links"><a id="homeTempoLink" href="#deal" aria-label="View LIVE proof">View LIVE proof</a><a id="homeTempoExplorer" target="_blank" rel="noopener noreferrer" aria-label="View payment on Tempo" hidden>View on Tempo</a></span></div>
+          </section>
+
+          <section class="home-expansion" id="homeExpansion">
+          <div class="other-deals-heading"><h2>The same idea in two more places</h2><span>The payment path stays the same.</span></div>
+          <div class="other-deals">
+            <button class="other-deal" type="button" data-view-deal="Office coffee supply">
+              <img src="assets/coffee-product.png" alt="Coffee supplies" />
+              <span class="other-deal-copy"><strong>Coffee supplies</strong><small><span id="homeBusinessCount">—</span> cafés · <span id="homeBusinessDemand">—</span>/month · <span id="homeBusinessSuppliers">—</span> suppliers competing</small></span>
+              <span class="other-deal-price"><span id="homeBusinessOffer">—</span><small>best offer</small></span>
+              <span class="other-deal-cta">View order</span>
+            </button>
+            <button class="other-deal" type="button" data-view-deal="Laptop under $700">
+              <img src="assets/laptop-product.png" alt="Laptop" />
+              <span class="other-deal-copy"><strong>Laptop under $700</strong><small><span id="homeRequestBuyers">—</span> people · <span id="homeRequestOffers">—</span> offers · save <span id="homeRequestSavings">—</span>/item</small></span>
+              <span class="other-deal-price"><span id="homeRequestBestPrice">—</span><small>best offer</small></span>
+              <span class="other-deal-cta">View request</span>
+            </button>
+          </div>
+          </section>
+
+          <section class="marketplace-growth" aria-label="DealArena growth loops and roadmap">
+            <div class="growth-head"><span class="eyebrow">WHY THIS CAN GROW</span><h2>More people make every order more useful.</h2></div>
+            <div class="growth-loops">
+              <div class="growth-loop"><span>More people, lower price</span><strong>More people <i>→</i> a larger order <i>→</i> more seller competition <i>→</i> a lower price</strong></div>
+              <div class="growth-loop"><span>Why share the deal</span><strong id="homeShareReason">More buyers unlock the next seller price tier</strong></div>
+              <div class="growth-loop"><span>How it grows</span><strong>Each order gives sellers a reason to offer again and gives buyers a reason to return</strong></div>
+            </div>
+            <div class="vision-roadmap">
+              <div><span class="eyebrow">Where this starts</span><h3>Start with one clear group order.</h3><p>This example starts with a phone. Next, the same payment flow expands to recurring business orders and product requests.</p></div>
+              <div class="roadmap"><span><b>Demo now</b>Phone group orders</span><span><b>Next</b>Business buying</span><span><b>Then</b>Product requests</span><span><b>Later</b>More product categories</span></div>
+            </div>
+          </section>
+
+        </section>
+      </section>
+
+      <!-- VIEW 2: DEAL PAGE -->
+      <section class="view-section page shell deal-page" data-section="deal" id="deal">
+        <button class="back-link" type="button" data-view="home">Back to all deals</button>
+        <div class="deal-page-intro"><div><span class="eyebrow">TEMPO TESTNET · <span id="liveOrderState">CHECKING PAYMENTS</span></span><h2>Phone group order</h2><p>Buyers fund one order. Sellers compete for the whole order, so a lower price can be worthwhile for both sides.</p></div></div>
+        <section class="scale-example-heading" aria-label="Separate simulated market">
+          <div><span class="eyebrow">SEPARATE SCALE EXAMPLE · NOT THE REAL ORDER BELOW</span><h3>What happens when hundreds buy together?</h3><p class="deal-intro-summary" id="dealIntroSummary"><span id="dealIntroBuyerCount">—</span> modeled buyers. These are example prices and amounts, not payments.</p><small>Example status: <span id="dealStatus">—</span></small></div>
+          <div class="time-remaining"><span>Example closes in</span><strong id="dealTimer">—</strong></div>
+        </section>
+        <div class="deal-workspace">
+          <article class="deal-summary">
+            <div class="deal-photo"><img src="assets/phone-product.png" alt="Graphite smartphone" /></div>
+            <div class="summary-stats">
+              <div><small>Buyers in example</small><strong id="dealBuyerCount">—</strong></div>
+            <div><small>Modeled order value</small><strong class="green-value" id="dealEscrowPool">—</strong></div>
+            </div>
+            <div class="winning-price"><span id="dealBestLabel">Best price now</span><strong id="dealWinningOffer">—</strong><p id="dealSaving">—</p></div>
+            <div class="buyer-crowd-strip">
+              <div class="avatar-stack" id="dealAvatarStack" aria-label="Example buyers joining"></div>
+              <div class="buyer-crowd-visual" aria-label="Buyer crowd growth">
+                <div class="buyer-crowd-progress"><span>Buyer crowd · <b id="buyerCrowdProgressCount">—</b></span><strong id="buyerCrowdProgressLabel">0%</strong></div>
+                <div class="progress-track"><i id="dealCrowdProgress"></i></div>
+              </div>
+              <div class="crowd-meta">
+                <span class="live-indicator"><i class="pulse-green"></i> <b id="crowdActiveCount">—</b> example buyers · <span class="escrow-tag" id="crowdEscrowText">—</span></span>
+              </div>
+            </div>
+            <div class="money-flow" id="dealMoneyFlow" hidden>
+              <div class="flow-step"><span id="flowSourceLabel">Order value</span><strong id="flowBuyers">—</strong></div>
+              <div class="flow-arrow" aria-hidden="true">→</div>
+              <div class="flow-step"><span>Order complete</span><strong>Pay out</strong></div>
+              <div class="flow-arrow" aria-hidden="true">→</div>
+              <div class="flow-split" id="flowOutcome">
+                <div><span id="flowSellerLabel">Seller gets</span><strong class="success" id="flowSeller">—</strong></div>
+                <div><span id="flowFeeLabel">Platform fee</span><strong id="flowFee">—</strong></div>
+              <div><span id="flowRefundLabel">Buyer refund</span><strong class="success" id="flowRefund">—</strong></div>
+              </div>
+            </div>
+            <section class="primary-order-action" aria-label="Your real testnet order">
+              <div><h3 id="liveOrderHeading">Try the real payment flow</h3><p id="liveOrderSummary">Checking the current order…</p></div>
+              <button class="primary-button" type="button" id="joinDealPage" disabled>Checking Tempo payments…</button>
+            </section>
+             <button class="secondary-button full live-proof-button" type="button" id="liveDealProof" disabled hidden aria-hidden="true" tabindex="-1">Checking LIVE proof…</button>
+             <p class="join-hint" id="dealJoinHint">These market figures are modeled, not charged.</p>
+            <button class="secondary-button full share-deal-button" type="button">Share deal</button>
+            <p class="share-deal-hint" id="dealShareHint">Share the order to move closer to the next price.</p>
+            <p class="summary-guarantee-note" id="liveActionNote" hidden>Checking the real proof…</p>
+          </article>
+          <div class="deal-details">
+            <section class="deal-stage" id="dealStage" aria-live="polite" aria-label="Market story">
+              <div class="deal-stage-head"><div><span class="eyebrow">HOW THIS ORDER WORKS</span><h3 id="dealStageTitle">Buyers are joining</h3><p id="dealStageMessage">More buyers make this order worth competing for.</p></div><span class="deal-stage-badge" id="dealStageBadge">READY</span></div>
+              <ol class="deal-stage-steps">
+                <li data-deal-stage="buyers"><span>1</span><strong>Buyers join</strong><small>One order gets bigger</small></li>
+                <li data-deal-stage="sellers"><span>2</span><strong>Seller competition</strong><small>Offers move the price</small></li>
+                <li data-deal-stage="close"><span>3</span><strong>Lower tier unlocks</strong><small>More buyers reach the next price</small></li>
+                <li data-deal-stage="money"><span>4</span><strong>Money is settled</strong><small>Refund, payout and 1% fee</small></li>
+              </ol>
+              <div class="deal-story-events" id="dealStoryEvents" aria-live="polite"></div>
+            </section>
+            <article class="detail-panel price-ladder">
+              <div class="panel-heading"><h3>Price ladder</h3><span id="ladderDescription">—</span></div>
+              <p class="price-ladder-lead" id="ladderLead">More buyers move the order to the next price.</p>
+              <div class="price-step active"><span><b id="tier2BuyerCount">200</b> buyers</span><strong id="tier2Price">—</strong><i></i></div>
+              <div class="price-step"><span><b id="tier3BuyerCount">500</b> buyers</span><strong id="tier3Price">—</strong><i></i></div>
+              <div class="price-step"><span><b id="tier4BuyerCount">800</b> buyers</span><strong id="tier4Price">—</strong><i></i></div>
+              <div class="progress-track ladder-track"><i id="dealProgress"></i></div>
+            </article>
+            <article class="detail-panel offers-panel">
+              <div class="panel-heading"><h3>Seller offers</h3><span id="offerStatus">COMPARING</span></div>
+              <div class="seller-row" id="offerRowA"><span class="seller-offer-copy"><span id="offerNameA">Seller A (Nova)</span><small id="offerMetaA">Current offer</small></span><span class="seller-offer-value"><strong id="offerA">—</strong><small id="offerOldA"></small></span></div>
+              <div class="seller-row winner" id="offerRowB"><span class="seller-offer-copy"><span id="offerNameB">Seller B (Apex) · Best price</span><small id="offerMetaB">Current offer</small></span><span class="seller-offer-value"><strong id="offerB">—</strong><small id="offerOldB"></small></span></div>
+              <div class="seller-row" id="offerRowC"><span class="seller-offer-copy"><span id="offerNameC">Seller C (Vertex)</span><small id="offerMetaC">Current offer</small></span><span class="seller-offer-value"><strong id="offerC">—</strong><small id="offerOldC"></small></span></div>
+            </article>
+            <article class="detail-panel seller-ladder-panel" id="sellerLadderPanel">
+              <div class="panel-heading"><h3>Seller terms</h3><span id="sellerLadderStatus">PRICE LADDER</span></div>
+              <p class="seller-ladder-lead" id="sellerLadderLead">Sellers see the same order. The lowest offer that fits wins when it closes.</p>
+              <div class="seller-ladder-meta">
+                <span><b id="sellerLadderSeller">Seller —</b><small id="sellerLadderSellerStatus">Seller ready</small></span>
+                <span><b id="sellerLadderMax">Up to —</b><small>your price limit</small></span>
+                <span><b id="sellerLadderCapacity">— items</b><small>maximum order</small></span>
+                <span><b id="sellerLadderExpiry">—</b><small>valid for</small></span>
+              </div>
+              <p class="seller-ladder-rule" id="sellerLadderPriceRule">The next price opens when enough buyers join.</p>
+              <p class="seller-ladder-trust" id="sellerLadderTrust">Seller is paid after delivery is confirmed. Guarantee: —</p>
+            </article>
+          </div>
+        </div>
+        <section class="deal-secondary-details" id="simulatedEconomicsDetails">
+        <section class="payment-activity legacy-simulated compact-simulated-summary" id="simulatedPaymentActivity" aria-label="Simulated market economics">
+          <div class="payment-activity-head"><div><span class="eyebrow"><span id="simPaymentBuyerLabel">—</span> BUYERS · EXAMPLE MARKET</span><h3><strong id="simPaymentCount">—</strong> buyer market scale · <strong id="simPaymentLocked">—</strong> modeled order value</h3><p id="simPaymentLead">This is a scale model. It shows the price, savings and payout. The separate LIVE proof shows the same payment path on Tempo.</p></div><span class="receipt-badge" id="simPaymentStatus">EXAMPLE MARKET</span></div>
+          <div class="payment-activity-summary"><span id="simPaymentWalletNote">Market figures are modeled. No buyer transactions are claimed.</span><span id="simPaymentNextTier">—</span></div>
+          <div class="payment-activity-totals" aria-label="Example order numbers"><span>Final price <b id="simPaymentUnitPrice">—</b></span><span>Example order <b id="simPaymentFinalOrder">—</b></span><span>Buyer savings <b id="simPaymentRefund">—</b></span><span>Seller payout <b id="simPaymentPayout">—</b></span><span>DealArena fee <b id="simPaymentFee">—</b></span></div>
+        </section>
+        </section>
+        <section class="live-money-flow" id="liveMoneyFlow" aria-label="Why the price drops and how money moves">
+          <div class="live-money-flow-head"><div><span class="eyebrow" id="liveFlowMode">THE MONEY PATH</span><h3 id="liveFlowTitle">Why the price falls — and why both sides join</h3><p id="liveFlowNote">Buyers create one ready order. Sellers compete for it. The lower price locks, unused money comes back, and delivery releases the seller payout.</p></div></div>
+          <div class="live-money-flow-benefits" aria-label="Who benefits">
+            <div><span>BUYER</span><strong>Lower price + unused money back</strong></div>
+            <div><span>SELLER</span><strong>One large, known order with less selling work</strong></div>
+            <div><span>DEALARENA</span><strong>1% after delivery and payout are complete</strong></div>
+          </div>
+          <section class="money-path-details" id="moneyPathDetails">
+            <ol class="live-money-flow-steps">
+              <li data-flow-step="committed"><span>1</span><strong id="flowStepCommittedTitle">Buyers join one order</strong><small id="flowStepCommittedNote">The order gets bigger</small></li>
+              <li data-flow-step="locked"><span>2</span><strong id="flowStepLockedTitle">Seller competes</strong><small id="flowStepLockedNote">Offers move the price</small></li>
+              <li data-flow-step="refunded"><span>3</span><strong id="flowStepRefundedTitle">Lower price unlocks</strong><small id="flowStepRefundedNote">More buyers reach the next tier</small></li>
+              <li data-flow-step="delivered"><span>4</span><strong id="flowStepDeliveredTitle">Delivery happens</strong><small id="flowStepDeliveredNote">Seller completes the order</small></li>
+              <li data-flow-step="paid"><span>5</span><strong id="flowStepPaidTitle">Seller gets paid</strong><small id="flowStepPaidNote">Only after delivery on Tempo</small></li>
+            </ol>
+          </section>
+        </section>
+        <section class="settlement-receipt" id="settlementReceipt" hidden aria-live="polite">
+          <div class="settlement-receipt-head"><div><span class="eyebrow" id="receiptEyebrow">TEMPO RECEIPT</span><h3 id="receiptTitle">Payment receipt</h3></div><span class="receipt-badge" id="receiptBadge">WAITING</span></div>
+          <div class="tempo-proof-highlight" id="receiptTempoProof" hidden><div><span class="eyebrow">PAYMENT DETAILS</span><strong id="receiptProofTitle">Price lock and buyer refund</strong></div><p id="receiptProofStory">Buyer surplus returns first; seller payment stays locked until delivery is confirmed.</p></div>
+          <div class="settlement-receipt-grid">
+            <div><span>Buyer money committed</span><strong id="receiptCommitted">—</strong></div>
+            <div><span>Unit price</span><strong id="receiptUnitPrice">—</strong></div>
+            <div><span>Total order</span><strong id="receiptFinal">—</strong></div>
+            <div><span>Seller payout</span><strong id="receiptPayout">—</strong></div>
+            <div><span>DealArena fee</span><strong id="receiptFee">—</strong></div>
+            <div><span>Buyer refund</span><strong id="receiptRefund">—</strong></div>
+          </div>
+          <section class="owner-tools" id="liveOwnerTools" hidden>
+            <div class="owner-actions" aria-label="Order owner actions">
+              <button class="secondary-button" type="button" id="settleDealLive" hidden aria-hidden="true" tabindex="-1">Lock price and return surplus</button>
+              <button class="primary-button" type="button" id="confirmDealFulfillmentLive" hidden aria-hidden="true" tabindex="-1">Confirm demo delivery · pay seller</button>
+              <button class="secondary-button" type="button" id="slashDealGuaranteeLive">Seller failed · refund buyers</button>
+              <button class="secondary-button" type="button" id="refundDealLive">Return buyer money</button>
+            </div>
+            <p class="summary-guarantee-note live-owner-status" id="dealLiveActionStatus" role="status"></p>
+          </section>
+          <section class="receipt-transaction-list" id="receiptTransactionList" hidden>
+            <div class="receipt-transaction-head"><div><span class="eyebrow">CONFIRMED TEMPO TRANSACTIONS</span><strong>Payments and refunds</strong></div><span id="receiptTransactionCount"></span></div>
+            <ul id="receiptTransactionLinks" aria-label="Confirmed Tempo transactions"></ul>
+          </section>
+          <div class="settlement-receipt-foot"><div><span id="receiptMemo">Payment details will appear here.</span><small id="receiptDealId"></small></div></div>
+        </section>
+    <section class="activity-panel activity-details legacy-simulated"><div class="always-visible-heading"><span>Market activity</span><span class="demo-state"><span class="state-dot" id="activityStateDot"></span><span id="activityState">SIMULATED SCALE</span></span></div><ol class="live-log" id="dealLog"></ol></section>
+      </section>
+
+      <!-- VIEW 3: BUSINESS -->
+      <section class="view-section page shell" data-section="business" id="business">
+        <button class="back-link" type="button" data-view="home">Back to all deals</button>
+        <div class="page-heading"><span class="eyebrow">BUSINESS ORDER <b class="modeled-badge">EXAMPLE</b></span><h2>One monthly order.<br />A better supplier price.</h2><p>Cafés combine their monthly needs. Suppliers compete for the full, predictable order.</p></div>
+        <article class="business-pool">
+          <div class="pool-main">
+            <div class="pool-title-wrap">
+            <h3>Coffee supplies</h3>
+            <p class="business-meta-pulse"><strong id="businessBuyerCount">—</strong> cafés · <span id="businessDemandSummary">—</span>/month · <span id="businessSuppliersCount">—</span> suppliers competing</p>
+            </div>
+            <div class="business-suppliers-panel">
+              <div class="panel-heading"><h4>Supplier prices</h4><span id="bizOfferStatus">—</span></div>
+              <div class="biz-supplier-row" id="bizSupplierRowA"><span id="bizSupplierNameA">Supplier A</span><strong id="bizOfferA">—</strong></div>
+              <div class="biz-supplier-row" id="bizSupplierRowB"><span id="bizSupplierNameB">Supplier B</span><strong id="bizOfferB">—</strong></div>
+              <div class="biz-supplier-row winner" id="bizSupplierRowC"><span id="bizSupplierNameC">Supplier C · Leading</span><strong id="bizOfferC">—</strong></div>
+            </div>
+          </div>
+          <div class="pool-offer">
+             <span>What the group needs each month</span>
+            <strong id="businessDemand">—</strong>
+             <small>from this group</small>
+            <div class="pool-rule"></div>
+             <span>Best supplier price</span>
+            <strong class="orange-value" id="businessOffer">—</strong>
+              <button class="primary-button" type="button" id="joinBusinessPool">See the real payment proof</button>
+             <p class="summary-guarantee-note" id="businessPaymentActionNote">This page shows the business case. The confirmed Tempo payment is on the Deal page.</p>
+             <section class="market-live-controls" id="businessLiveControls" hidden>
+               <div class="always-visible-heading">Tempo order controls</div>
+               <div class="owner-actions" aria-label="Business order controls">
+                 <button class="secondary-button" type="button" id="settleBusinessLive">Lock the best offer</button>
+                 <button class="secondary-button" type="button" id="confirmBusinessFulfillmentLive">Confirm completion</button>
+                 <button class="secondary-button" type="button" id="slashBusinessSupplierLive">Report supplier failure</button>
+                 <button class="secondary-button" type="button" id="refundBusinessLive">Return buyer money</button>
+               </div>
+               <p class="summary-guarantee-note live-owner-status" id="businessLiveActionStatus" role="status"></p>
+             </section>
+          </div>
+          <section class="business-economics" aria-label="Business pool economics">
+             <div class="business-economics-head"><div><span class="eyebrow">EXAMPLE NUMBERS</span><h4>If this order completes</h4></div><span>DealArena earns 1% after delivery</span></div>
+            <div class="business-economics-grid">
+              <div><span>Projected order value</span><strong id="businessEconomicsVolume">—</strong></div>
+              <div><span>Projected supplier payout</span><strong id="businessEconomicsPayout">—</strong></div>
+              <div><span>Potential DealArena fee</span><strong id="businessEconomicsFee">—</strong></div>
+              <div><span>Projected business savings</span><strong id="businessEconomicsSavings">—</strong></div>
+            </div>
+            <p id="businessEconomicsNote">These numbers explain the opportunity. They are not completed payments.</p>
+          </section>
+          <div class="pool-ladder">
+            <div class="biz-ladder-track">
+              <span class="biz-step unlocked" id="bizStep1"><b>10</b> cafés</span>
+              <i></i>
+              <span class="biz-step unlocked" id="bizStep2"><b>30</b> cafés</span>
+              <i></i>
+              <span class="biz-step" id="bizStep3"><b>50</b> cafés</span>
+            </div>
+            <div class="biz-ladder-meta">
+                <span class="biz-ladder-hint" id="bizLadderHint">—</span>
+              <b id="businessStage">—</b>
+            </div>
+          </div>
+          <ol class="mini-log business-activity" id="businessLog" aria-label="Business pool activity"></ol>
+          <section class="secondary-payment-ledger legacy-simulated"><div class="always-visible-heading"><span>Show the business numbers</span><span><b id="businessPaymentCount">—</b> cafés · <b id="businessMoneyLocked">—</b> monthly demand</span></div><p id="businessPaymentNote">This is a demand model, not a payment record.</p><ol id="businessPaymentLedger" aria-label="Business modeled order economics"></ol><span class="payment-ledger-status" id="businessPaymentStatus">EXAMPLE MARKET</span></section>
+        </article>
+      </section>
+
+      <!-- VIEW 4: REQUEST -->
+      <section class="view-section page shell" data-section="request" id="request">
+        <button class="back-link" type="button" data-view="home">Back to all deals</button>
+        <div class="page-heading"><span class="eyebrow">PRODUCT REQUEST <b class="modeled-badge">EXAMPLE</b></span><h2>Ask for a product.<br />Let sellers compete.</h2><p>Set the most you want to pay. Other buyers can join, then sellers compete below your limit.</p></div>
+        <div class="buyer-value-strip" aria-label="How a product request works"><span class="eyebrow">HOW IT WORKS</span><strong>Set a maximum price. Pay less if sellers beat it.</strong><span>You pay the final price; unused money comes back. Sellers see a ready order and get paid after delivery.</span></div>
+        <div class="request-layout">
+          <form class="request-form" id="requestForm">
+            <label>What do you need?<input name="need" type="text" placeholder="For example: laptop" required /></label>
+            <label>Maximum price<input name="price" type="text" placeholder="$700 per item" required /></label>
+            <p class="request-hint" id="requestCreateHint">Create a read-only example here. In the real order, the maximum price is funded first and the difference returns after a lower offer wins.</p>
+            <button class="primary-button" type="submit">Show request</button>
+            <output class="form-preview-card" id="requestPreviewCard" hidden aria-live="polite">
+              <span class="eyebrow">REQUEST EXAMPLE</span>
+              <h3 id="requestPreviewTitle">—</h3>
+              <div class="form-preview-grid"><span>Maximum price<strong id="requestPreviewPrice">—</strong></span><span>Next step<strong>Buyers join, sellers offer</strong></span></div>
+              <p id="requestPreviewNote">Read-only example. No payment was sent.</p>
+            </output>
+          </form>
+          <section class="request-list" aria-label="Buyer requests">
+              <div class="panel-heading"><h3>Requests buyers are already making</h3></div>
+            <button type="button" class="request-row selected" id="laptopRequest" aria-pressed="true"><div><strong>Laptop under $700</strong><span><i id="openRequestBuyers">—</i> people · <i id="openRequestOfferCount">—</i> offers</span></div><b id="openRequestBestPrice">—</b></button>
+            <button type="button" class="request-row" id="crmRequest" aria-pressed="false"><div><strong>CRM under $30 / user</strong><span><i id="crmRequestBuyers">—</i> people · <i id="crmRequestOfferCount">—</i> offers</span></div><b id="crmRequestBestPrice">—</b></button>
+            <div class="request-action-row"><button class="secondary-button" type="button" id="joinRequestButton">See the real payment proof</button><button class="secondary-button" type="button" id="fundRequestButton" hidden>Continue funding</button><p id="requestActionHint">This page shows demand. The confirmed Tempo payment is on the Deal page.</p></div>
+             <section class="market-live-controls" id="requestLiveControls" hidden>
+               <div class="always-visible-heading">Tempo request controls</div>
+               <div class="owner-actions" aria-label="Request controls">
+                 <button class="secondary-button" type="button" id="settleRequestLive">Lock the best offer</button>
+                 <button class="secondary-button" type="button" id="confirmRequestFulfillmentLive">Confirm completion</button>
+                 <button class="secondary-button" type="button" id="slashRequestSupplierLive">Report supplier failure</button>
+                 <button class="secondary-button" type="button" id="refundRequestLive">Return buyer money</button>
+               </div>
+               <p class="summary-guarantee-note live-owner-status" id="requestLiveActionStatus" role="status"></p>
+             </section>
+            <ol class="mini-log request-activity" id="requestLog" aria-label="Request activity"></ol>
+          <section class="secondary-payment-ledger legacy-simulated"><div class="always-visible-heading"><span>Show request numbers</span><span><b id="requestPaymentCount">—</b> buyers · <b id="requestMoneyLocked">—</b> example demand</span></div><p id="requestPaymentNote">These numbers show demand, not payments.</p><ol id="requestPaymentLedger" aria-label="Request modeled order economics"></ol><span class="payment-ledger-status" id="requestPaymentStatus">EXAMPLE MARKET</span></section>
+          </section>
+        </div>
+      </section>
+
+      <!-- VIEW 5: SELL -->
+      <section class="view-section page shell" data-section="sell" id="sell">
+        <button class="back-link" type="button" data-view="home">Back to all deals</button>
+        <div class="page-heading"><span class="eyebrow">SELLER PAGE <b class="modeled-badge">EXAMPLE</b></span><h2>Find a ready order.<br />Make one offer.</h2><p>Choose a group with demand and set the price you can offer.</p></div>
+           <div class="seller-value-strip"><span class="eyebrow">FOR SELLERS</span><strong>Start with the order, then choose your price.</strong><span>One order, many buyers. Deliver after it closes; get paid after delivery.</span><span class="seller-value-path">Your guarantee stays locked until delivery is confirmed.</span></div>
+        <div class="sell-layout">
+          <section class="demand-list">
+            <div class="panel-heading"><h3>Orders looking for a seller</h3><span id="demandGroupCount">—</span></div>
+            <div id="demandItemsContainer">
+            <button class="demand-item selected" type="button" aria-pressed="true" data-title="Phone group order" data-price="—"><span><strong>Phone group order</strong><small id="phoneDemandMeta">—</small></span><b id="phoneDemandBest">—</b></button>
+              <button class="demand-item" type="button" aria-pressed="false" data-title="Coffee supplies" data-price="—"><span><strong>Coffee supplies</strong><small id="coffeeDemandMeta">—</small></span><b id="coffeeDemandBest">—</b></button>
+              <button class="demand-item" type="button" aria-pressed="false" data-title="Laptop under $700" data-price="—"><span><strong>Laptop under $700</strong><small id="laptopDemandMeta">—</small></span><b id="laptopDemandBest">—</b></button>
+            </div>
+          </section>
+          <form class="offer-form" id="offerForm">
+            <div class="panel-heading"><h3>Offer to this order</h3></div>
+            <p id="offerProduct">Phone group order</p>
+            <label id="offerSinglePriceField"><span id="offerValueLabel">Your price per item</span><input name="offerPrice" id="offerPriceInput" type="text" inputmode="decimal" value="$670" placeholder="For example: $650" required /></label>
+            <div class="offer-terms-grid" id="dealOfferTerms">
+              <label hidden><span>Price unlocks after</span><input name="minimumBuyerCount" id="offerThresholdInput" type="number" min="1" value="200" required /><small>funded buyers</small></label>
+              <label><span>Maximum capacity</span><input name="maxBuyerUnits" id="offerCapacityInput" type="number" min="1" value="800" required /><small>items</small></label>
+              <label><span>Delivery</span><strong class="fixed-term">7 days</strong><input name="delivery" id="offerDeliveryInput" type="hidden" value="7 days" /></label>
+              <label><span>Expires</span><strong class="fixed-term">By order close</strong><input name="expiry" id="offerExpiryInput" type="hidden" value="24 hours" /></label>
+            </div>
+            <div class="seller-ladder-fields" id="sellerLadderFields">
+              <div class="seller-ladder-fields-head"><strong>Price ladder</strong><small>Each lower price needs more funded buyers.</small></div>
+              <div class="seller-ladder-row"><label><span>Tier 1 price</span><input name="ladderPrice1" id="ladderPrice1Input" type="text" inputmode="decimal" value="$680" required /></label><label><span>At</span><input name="ladderThreshold1" id="ladderThreshold1Input" type="number" min="1" value="200" required /><small>buyers</small></label></div>
+              <div class="seller-ladder-row"><label><span>Tier 2 price</span><input name="ladderPrice2" id="ladderPrice2Input" type="text" inputmode="decimal" value="$590" required /></label><label><span>At</span><input name="ladderThreshold2" id="ladderThreshold2Input" type="number" min="1" value="500" required /><small>buyers</small></label></div>
+              <div class="seller-ladder-row"><label><span>Tier 3 price</span><input name="ladderPrice3" id="ladderPrice3Input" type="text" inputmode="decimal" value="$550" required /></label><label><span>At</span><input name="ladderThreshold3" id="ladderThreshold3Input" type="number" min="1" value="800" required /><small>buyers</small></label></div>
+            </div>
+            <p class="offer-support-note" id="offerSupportNote"><strong>PREVIEW ONLY.</strong> This form does not change the market or send a guarantee. A live offer would lock the guarantee on Tempo.</p>
+            <label><span>Seller guarantee</span><small class="field-help" id="sellerGuaranteeHelp">A real offer locks this amount until delivery. It is not locked in this example.</small><input name="guarantee" id="offerGuaranteeInput" type="text" inputmode="decimal" value="$55" placeholder="For example: $55" required /></label>
+            <button class="primary-button" type="submit">Show offer</button>
+            <button class="secondary-button full" type="button" id="sellerProofLink">See the real payment proof</button>
+            <small id="guaranteeStatus" role="status" aria-live="polite">Read-only example. No guarantee was sent.</small>
+            <div class="seller-guarantee-ledger" aria-live="polite"><span class="eyebrow">IN A REAL OFFER</span><strong id="sellerGuaranteeAmount">Guarantee: $55</strong><span id="sellerGuaranteeReceipt">Locked on Tempo until delivery.</span></div>
+            <output class="form-preview-card" id="offerPreviewCard" hidden aria-live="polite">
+              <span class="eyebrow">OFFER EXAMPLE</span>
+              <h3 id="offerPreviewTitle">—</h3>
+              <div class="form-preview-grid"><span><span id="offerPreviewPriceLabel">Your price</span><strong id="offerPreviewPrice">—</strong></span><span>Capacity<strong id="offerPreviewCapacity">—</strong></span><span>Price ladder<strong id="offerPreviewTiers">—</strong></span><span>Guarantee<strong id="offerPreviewGuarantee">—</strong></span></div>
+              <p id="offerPreviewNote">Read-only example. No guarantee was sent.</p>
+            </output>
+          </form>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/ethers/6.17.0/ethers.umd.min.js"></script>
+    <script src="market-model.js"></script>
+    <script src="wallet-actions.js"></script>
+    <script src="presenter-access.js?v=20261012-live1"></script>
+    <script src="app.js?v=20261012-focus11"></script>
+  </body>
+</html>
+
+
+
+
+
+
+
